@@ -158,11 +158,11 @@ Considering all the above, we want to propose a control parameter recommendation
 
 **Given**:
 
-- The parameter settings $\{ P_i \}_{i=1}^{N}$ where $N$ denotes the number of parameter combinations, and $P_i = (p_1, p_2, \ldots, p_k)$ where $k$ denotes the number of categories of paramters.
+- The parameter settings $\lbrace P_i \rbrace_{i=1}^{N}$ where $N$ denotes the number of parameter combinations, and $P_i = (p_1, p_2, \ldots, p_k)$ where $k$ denotes the number of categories of paramters.
 
-- Label set $\{y_i\}_{i=1}^{N}$ where $y_i = [0,1]$ and $0$ denotes there is a crack after welding while $1$ denotes there isn't a crack after welding.
+- Label set $\lbrace y_i\rbrace_{i=1}^{N}$ where $y_i = [0,1]$ and $0$ denotes there is a crack after welding while $1$ denotes there isn't a crack after welding.
 
-- A set of parameters that should maximize $\{p_{j}\}_{j \in K_1}$, a set of parameters that should minimize $\{p_{j}\}_{j \in K_2}$, and a set of parameters that are no optimization goal $\{p_{j}\}_{j \in K_3}$ where $K_1 \cup K_2 \cup K_3 = K$ and $K_i \cap K_j = \phi, (i \neq j)$
+- A set of parameters that should maximize $\lbrace p_{j}\rbrace_{j \in K_1}$, a set of parameters that should minimize $\lbrace p_{j}\rbrace_{j \in K_2}$, and a set of parameters that are no optimization goal $\lbrace p_{j}\rbrace_{j \in K_3}$ where $K_1 \cup K_2 \cup K_3 = K$ and $K_i \cap K_j = \phi, (i \neq j)$
 
 **Objective**
 
@@ -183,11 +183,11 @@ There are six kinds of parameters provided by the data set, that is:
 
 And the result is whether there will be a crack in the welding metal afterward.
 
-According to domain knowledge, we assume $K_1 = \{\text{welding speed (m/min)}\}$, $K_2 = \{\text{power (W), gas flow rate (l/min)}\}$, and $K_3 = \{\text{focal position (mm), angular position (°), material thickness (mm)}\}$
+According to domain knowledge, we assume $K_1 = \lbrace \text{welding speed (m/min)} \rbrace$, $K_2 = \lbrace \text{power (W), gas flow rate (l/min)} \rbrace$, and $K_3 = \lbrace \text{focal position (mm), angular position (°), material thickness (mm)} \rbrace$
 
 1. We use a LogisticRegression model provided by sk-learn to learn a mapping $f(P) \rightarrow \hat y$.
-2. We enumerate all possible combinations of parameters $\{P\}_{\text{all_}}$ and apply the mapping $f$ on them, from which we select those with $\hat y=1$ as the alternative set $\{P\}_{\text{alt}}$.
-3. Finally, we utilize Immune Genetic Algorithm to select the optimal combination $P_{\text{opt}}$ from $\{P\}_{\text{alt}}$ by simultaneously meeting all optimization objectives.
+2. We enumerate all possible combinations of parameters $\lbrace P \rbrace_{\text{all}}$ and apply the mapping $f$ on them, from which we select those with $\hat y=1$ as the alternative set $\lbrace P \rbrace_{\text{alt}}$.
+3. Finally, we utilize Immune Genetic Algorithm to select the optimal combination $P_{\text{opt}}$ from $\lbrace P \rbrace_{\text{alt}}$ by simultaneously meeting all optimization objectives.
 
 For implementation details please refer to the codes in `laser_welding.py`.
 
