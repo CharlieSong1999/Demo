@@ -2,11 +2,11 @@
 
 This is a Demo for the project "Intelligent Manufacturing-oriented Big Data Analytics across the Production Process: Methodologies and Applications"
 
-It allows users to upload dataset for a control parameter recommendation algorithm and a self-adapting trajectory redress algorithm and then demonstrate the result of them.
+It allows users to upload the data set for a control parameter recommendation algorithm and a self-adapting trajectory redress algorithm and then demonstrate the result of them.
 
 # Getting Start
 
-It's a project with both front end and back end, meaning that we have to use two process serving as front-end server and back-end server.
+It's a project with both the front-end and the back-end, meaning that we have to use two processes serving as a front-end server and a back-end server.
 
 To start the Front-end service, please go to the `/Front-End/` folder.
 
@@ -40,7 +40,7 @@ To clarify that we recommend optimum parameter combination, some industrial indi
 
 ![](./img/Trajectory%20self-adapting%20redress.png)
 
-The final page demonstrates a trajectory self-adapting redress algorithm based on an ultra-precise diamond-cutting process. In the graph, the original command position, the redressed command position, and the following error will be depicted as a line graph. There are two types of trajectories to choose from, showing that our algorithm could tackle multiple situation.
+The final page demonstrates a trajectory self-adapting redress algorithm based on an ultra-precise diamond-cutting process. In the graph, the original command position, the redressed command position, and the following error will be depicted as a line graph. There are two types of trajectories to choose from, showing that our algorithm could tackle multiple situations.
 
 # Features
 
@@ -50,11 +50,11 @@ The final page demonstrates a trajectory self-adapting redress algorithm based o
 
 # Development
 
-The demo consists of two part: Front-End and Back-End.
+The demo consists of two parts: Front-End and Back-End.
 
 ## Front-End
 
-Using vite + vue3 + typescript + element-ui + draggable as the project based.
+Using vite + vue3 + typescript + element-ui + draggable as the project-based.
 
 ### Project Structure
 
@@ -103,29 +103,28 @@ Using vite + vue3 + typescript + element-ui + draggable as the project based.
   - Url: '/api/upload'
   - Method: POST
   - Send: File
-  - Receive: Json
-    Front end use this api to upload the data file to the back end server. Back end server will decompress the file and then go through all available data files before return the list of them.
+  - Receive: JSON
+    Front end uses this API to upload the data file to the back-end server. The back-end server will decompress the file and then go through all available data files before returning the list of them.
 
 - getProcesses:
   - Url: '/api/getprocesses'
   - Method: GET
   - Send: None
-  - Receive: Json  
-    Front end use this api to get the info of processes available on the back end. Normally it should contain the name of the process and the parameters it required.
+  - Receive: JSON  
+    The end uses this API to get the info on processes available on the back end. Normally it should contain the name of the process and the parameters it required.
 
 - getRecommend:
   - Url: '/api/getRecommend'
   - Method: GET
   - Send: String
   - Receive: Json
-    Front end use this api to get the result of parameter recommendation from the back end. Front end will send the path of data file to the back end, then back end will return the result in json form.
-
-- selfAdapting:
+    Front end uses this API to get the result of parameter recommendation from the back end. The front end will send the path of the data file to the back end, then the back end will return the result in json form.
+- self-adapting:
   - Url: '/api/selfAdapting'
   - Method: GET
   - Send: String
   - Receive: Json
-    Front end use this api to get the result of trajectory self-adapting redressment. Front end should tell the back end server the path of the data file, then back end shall return the a list of results in json form.
+Front end uses this API to get the result of trajectory self-adapting redressment. The front end should tell the back end server the path of the data file, then the back end shall return a list of results in JSON form.
 
 ### Draggable Data Input
 
@@ -143,7 +142,7 @@ Using sk-learn to implement the two algorithms.
 
 ### Config
 
-Config files was placed in `config`
+Config files were placed in `config`
 
 ### Control Parameter Recommendation
 
@@ -153,9 +152,9 @@ Laser beam welding (LBW) is a welding technique used to join pieces of metal or 
 
 Since laser beam welding has high power density (on the order of 1 MW/cm2) resulting in small heat-affected zones and high heating and cooling rates, in some control parameter settings, some cracks would occur on the metal, making it a defective product.
 
-Apart from the cracks, some of the parameters have some physical attributes, making it worth optimizing, in order to make the industrial process cost-effictive, fast, and flawless.
+Apart from the cracks, some of the parameters have some physical attributes, making it worth optimizing, in order to make the industrial process cost-effective, fast, and flawless.
 
-Considering all the above, we want to proposed a control parameter recommendation algorithm, that could recommend the optimial parameter settings, while making sure that no cracks would occurred on the metal.
+Considering all the above, we want to propose a control parameter recommendation algorithm, that could recommend the optimal parameter settings while making sure that no cracks would occur on the metal.
 
 **Given**:
 
@@ -171,7 +170,7 @@ Considering all the above, we want to proposed a control parameter recommendatio
 
 #### Method
 
-There are six kinds of paramter provided by the data set, that is:
+There are six kinds of parameters provided by the data set, that is:
 
 |           Name           | DataType  |    Range     | Step  |
 |:-----------------------: |:--------: |:-----------: |:----: |
@@ -187,13 +186,38 @@ And the result is whether there will be a crack in the welding metal afterward.
 According to domain knowledge, we assume $K_1 = \{\text{welding speed (m/min)}\}$, $K_2 = \{\text{power (W), gas flow rate (l/min)}\}$, and $K_3 = \{\text{focal position (mm), angular position (°), material thickness (mm)}\}$
 
 1. We use a LogisticRegression model provided by sk-learn to learn a mapping $f(P) \rightarrow \hat y$.
-2. We enumerate all possible combination of parameters $\{P\}_{\text{all}}$, and apply the mapping $f$ on them, from which we select those with $\hat y=1$ as the alternative set $\{P\}_{\text{alt}}$.
-3. Finally, we utilize Immune Genetic Algorithm to select the optimal combination $P_{\text{opt}}$ from $\{P\}_{\text{alt}}$ by simultaneously meet all optimization objective.
+2. We enumerate all possible combinations of parameters $\{P\}_{\text{all_}}$ and apply the mapping $f$ on them, from which we select those with $\hat y=1$ as the alternative set $\{P\}_{\text{alt}}$.
+3. Finally, we utilize Immune Genetic Algorithm to select the optimal combination $P_{\text{opt}}$ from $\{P\}_{\text{alt}}$ by simultaneously meeting all optimization objectives.
 
 For implementation details please refer to the codes in `laser_welding.py`.
 
 ---
 
-### Self-Adapting Trajectory Redressment
+### Self-Adapting Trajectory Control
 
 #### Background
+
+Ultra-precision cutting starts with SPDT (SinglePoint Diamond Turning) technology, which is supported by air-bearing spindles, pneumatic slides, high rigidity, high precision tools, feedback control and ambient temperature control to achieve nanoscale surface roughness. Diamond cutters are mostly used for milling, which is widely used in the processing of copper plane and aspherical optical components, plexiglass, plastic products (such as plastic lenses for cameras, contact lens lenses, etc.), ceramics and composite materials.
+
+Among the supporting technologies, feedback control is the technology we want to discuss in this case. Feedback control is a control mechanism that uses information from measurements to manipulate a variable to achieve the desired result. The objective is to develop a model or algorithm governing the application of system inputs to drive the system to a desired state, while minimizing any delay, overshoot, or steady-state error and ensuring a level of control stability; often with the aim to achieve a degree of optimality.
+
+To do this, a controller with the requisite corrective behavior is required. This controller monitors the controlled process variable (PV), and compares it with the reference or set point (SP). The difference between the actual and desired value of the process variable, called the error signal, or SP-PV error, is applied as feedback to generate a control action to bring the controlled process variable to the same value as the set point.
+
+#### Problem Setting
+
+**Given**
+
+- A sequence of set points $S^{h}$, in this case, named as command position.
+- A Sequence of actual points $A^{h}$, i.e., the result points of the industrial process after input $S^{h}$ directly.
+
+**Objective**
+
+- To find another set points $S^{m}$, which could get $A^{m}$ as a result, while satisfy that $A^{m} \sim S^{h}$
+
+#### Method
+
+It's natural that there exists a mapping $f$ that $f(S^h) \rightarrow A^h$. We could find one of its inverse mappings that satisfies $f^{-1}(A^h) \rightarrow S^h$, meaning that with $A^h$ as the result we could predict the original command points. Then we could input $S^h$ to get $S^{m}$, which is supposed to be the command points that could consequence $S^h$.
+
+In practical, we directly learn $f^{-1}$ with $S^h$ and $A^h$, then use the output of $f^{-1}(S^h)$ as the algorithm output.
+
+For more details, please refer to the codes in `self_adapting.py`.
