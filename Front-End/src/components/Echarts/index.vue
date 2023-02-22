@@ -23,12 +23,64 @@ import { get_max, get_min } from '../../utilies/utilies'
 const store = useStore()
 const { self_Adapting } = storeToRefs(store)
 
+// data series
+let dataseries = [{
+    name: 'new_actual_position',
+    type: 'line',
+    smooth: true,
+    data: [],
+    symbolSize: 0.1,
+    symbol: 'circle',
+    label: { show: false, fontSize: 16 },
+    labelLayout: { dx: -20 },
+    encode: { label: 2, tooltip: 1 },
+    color: 'blue',
+},
+{
+    name: 'Command_Position',
+    type: 'line',
+    smooth: true,
+    data: [],
+    symbolSize: 0.1,
+    symbol: 'rect',
+    label: { show: false, fontSize: 16 },
+    labelLayout: { dx: -20 },
+    encode: { label: 2, tooltip: 1 },
+    color: 'red',
+},
+{
+    name: 'Following-Error',
+    type: 'line',
+    smooth: true,
+    data: [],
+    symbolSize: 0.1,
+    symbol: 'triangle',
+    label: { show: false, fontSize: 16 },
+    labelLayout: { dx: -20 },
+    encode: { label: 2, tooltip: 1 },
+    color: 'orange',
+    yAxisIndex: 1,
+},
+{
+    name: 'new_following_error',
+    type: 'line',
+    smooth: true,
+    data: [],
+    symbolSize: 0.1,
+    symbol: 'triangle',
+    label: { show: false, fontSize: 16 },
+    labelLayout: { dx: -20 },
+    encode: { label: 2, tooltip: 1 },
+    color: 'green',
+    yAxisIndex: 1,
+}]
 
 
 
 let select_value = ref('');
 
 let option = {
+    animationDuration: 10000,
     title: {
         text: "Self-Adapting Experiment",
         subtext: 'sine.txt',
@@ -72,65 +124,9 @@ let option = {
     },
 
     series: [
-        {
-            name: 'new_actual_position',
-            type: 'line',
-            smooth: true,
-            data: [],
-            symbolSize: 0.1,
-            symbol: 'circle',
-            label: { show: false, fontSize: 16 },
-            labelLayout: { dx: -20 },
-            encode: { label: 2, tooltip: 1 },
-            color: 'blue',
-            animationEasing: "cubicIn",
-            animationDuration: 2000
-        },
-        {
-            name: 'Command_Position',
-            type: 'line',
-            smooth: true,
-            data: [],
-            symbolSize: 0.1,
-            symbol: 'rect',
-            label: { show: false, fontSize: 16 },
-            labelLayout: { dx: -20 },
-            encode: { label: 2, tooltip: 1 },
-            color: 'red',
-            animationEasing: "cubicIn",
-            animationDuration: 2000
-        },
-        {
-            name: 'Following-Error',
-            type: 'line',
-            smooth: true,
-            data: [],
-            symbolSize: 0.1,
-            symbol: 'triangle',
-            label: { show: false, fontSize: 16 },
-            labelLayout: { dx: -20 },
-            encode: { label: 2, tooltip: 1 },
-            color: 'orange',
-            yAxisIndex: 1,
-            animationEasing: "cubicIn",
-            animationDuration: 2000
-        },
-        {
-            name: 'new_following_error',
-            type: 'line',
-            smooth: true,
-            data: [],
-            symbolSize: 0.1,
-            symbol: 'triangle',
-            label: { show: false, fontSize: 16 },
-            labelLayout: { dx: -20 },
-            encode: { label: 2, tooltip: 1 },
-            color: 'green',
-            yAxisIndex: 1,
-            animationEasing: "cubicIn",
-            animationDuration: 2000
-        }
-    ]
+
+    ],
+
 }
 
 var myChart: echarts.ECharts;
@@ -144,13 +140,16 @@ onMounted(() => {
 
 // change data source according to the value of the selector
 const changeData = (e: string) => {
+    // To let the echarts draw the data again.
+    myChart.clear()
 
-    option.series.forEach((element: any) => {
+    dataseries.forEach((element: any) => {
         element.data = self_Adapting.value['result'][e][element.name]
     });
     option.title.subtext = e + '.txt';
-    myChart.setOption(option)
+    option.series = dataseries;
 
+    myChart.setOption(option)
 }
 
 

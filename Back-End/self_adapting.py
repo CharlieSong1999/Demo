@@ -63,6 +63,10 @@ def run(name):
     return_json['new_actual_position'] = list(zip(return_json['Time(ms)'],new_actual_position.reshape(-1).tolist()))
     return_json['new_following_error'] = list(zip(return_json['Time(ms)'],new_following_error.reshape(-1).tolist()))
     
+    # reduce the size of return list for better demonstration performance.
+    for key in return_json.keys():
+        return_json[key] = [i for index,i in enumerate(return_json[key]) if index%5==0 ]
+    
     return return_json
     
 if __name__ == '__main__':
