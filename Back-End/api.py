@@ -90,12 +90,14 @@ def recommend():
 def get_self_adapting():
     '''
     receive: str
-    return: dict 
+    return: 'sine' - (time, value), 'step' - (time, value) 
     '''
     print('Receiving GET request on /api/selfAdapting ...')
     sine = self_adapting.run('sine')
     step = self_adapting.run('step')
     print('After getting result of sine and step ...')
+    print()
+    
     return_list = {}
     return_list['sine'] = sine
     return_list['step'] = step
