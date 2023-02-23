@@ -1,5 +1,4 @@
 <template>
-
   <!-- ============================================================== -->
   <el-header style="height: 150px">
     <div class="content content-header">
@@ -30,7 +29,6 @@
     </div>
   </el-footer>
   <!-- ============================================================== -->
-
 </template>
 
 <script lang="ts" setup>
@@ -47,15 +45,18 @@ import {
   ArrowLeft,
   ArrowRight,
 } from '@element-plus/icons-vue'
-import axios from 'axios';
-import { cloneDeep } from 'lodash';
+
+// api
+import { get_recommend, getSelfAdapting } from './api/api';
 
 /*
  * Variables
  */
 const store = useStore()
-const { Flags, recommend_param, Status, self_Adapting } = storeToRefs(store)
+const { Flags, Status, self_Adapting } = storeToRefs(store)
 const router = useRouter()
+
+
 
 let activeNum = ref<number>(0)
 
@@ -74,35 +75,6 @@ const checkStep1 = () => {
   return true;
 }
 
-/*
- * receive recommended parameter list from back-end server.
- */
-const get_recommend = () => {
-  const api = '/api/getRecommend'
-  axios.get(api).then((res: any) => {
-    const data = res.data;
-    console.log('get Recommend reply: ', data);
-
-    recommend_param.value = cloneDeep(data);
-    console.log('recommend_param.value', recommend_param.value);
-    Status.value.Btn_recommend_loading = false
-    Flags.value.Recommend = true
-  })
-}
-
-/*
- * receive self adapting result from back-end server
- */
-const getSelfAdapting = () => {
-  const api = '/api/selfAdapting'
-  axios.get(api).then((res: any) => {
-    const data = res.data;
-    console.log('self-adapting reply: ', data);
-
-    self_Adapting.value['result'] = cloneDeep(data);
-    console.log('self_Adapting.value', self_Adapting.value);
-  })
-}
 
 
 const Step = (num: number) => {

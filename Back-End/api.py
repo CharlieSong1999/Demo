@@ -79,8 +79,9 @@ def recommend():
     receive: str
     return: list
     '''
+    paths = request.args.getlist('paths[]')
     print('Receiving GET request on /api/getRecommend ...')
-    re = laser_welding.run()
+    re = laser_welding.run(paths[0])
     print('After executing laser_welding.run() ... ')
     params = re['result'].iloc[0].to_dict()
     print('Returning ...')
@@ -92,11 +93,11 @@ def get_self_adapting():
     receive: str
     return: 'sine' - (time, value), 'step' - (time, value) 
     '''
+    paths = request.args.getlist('paths[]')
     print('Receiving GET request on /api/selfAdapting ...')
     sine = self_adapting.run('sine')
     step = self_adapting.run('step')
     print('After getting result of sine and step ...')
-    print()
     
     return_list = {}
     return_list['sine'] = sine

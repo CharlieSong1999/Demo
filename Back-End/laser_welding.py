@@ -5,12 +5,11 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
-def run():
+def run(fn='./v61.csv'):
 
     experiment_record = {}
 
     # load data set
-    fn = './v61.csv'
     experiment_record['fn'] = fn
     dataset = pd.read_csv(fn)
 
